@@ -1,5 +1,5 @@
 const EVENT_DATE=new Date('2026-07-09T17:00:00+05:30');
-const GOOGLE_MAPS_URL=''; // Paste the final Google Maps share URL here.
+const GOOGLE_MAPS_URL='https://maps.google.com/?q=Christuraj+Church+Ettumanoor'; // Paste the final Google Maps share URL here.
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12,rootMargin:'0px 0px -30px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
