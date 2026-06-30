@@ -11,6 +11,21 @@ function step(direction){track.scrollBy({left:(photos[0].getBoundingClientRect()
 const directions=document.getElementById('directions');if(GOOGLE_MAPS_URL)directions.href=GOOGLE_MAPS_URL;else directions.onclick=e=>{e.preventDefault();alert('The Google Maps link will be added soon.')};
 document.querySelectorAll('[data-rsvp]').forEach(button=>button.onclick=()=>{document.querySelectorAll('[data-rsvp]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));document.getElementById('response').textContent=button.dataset.rsvp==='yes'?'Wonderful — we cannot wait to celebrate with you.':'Thank you for letting us know. You will be in our thoughts.'});
 const form=document.getElementById('blessingForm'),wall=document.getElementById('wall');form.onsubmit=e=>{e.preventDefault();const data=new FormData(form),card=document.createElement('article'),message=document.createElement('p'),name=document.createElement('span');card.className='blessing-card';message.textContent='“'+data.get('blessing').trim()+'”';name.textContent='— '+data.get('name').trim();card.append(message,name);wall.prepend(card);form.hidden=true;document.getElementById('thanks').hidden=false};
-const music=document.getElementById('music');let context,master,timer;
-function chord(){const now=context.currentTime;[261.63,329.63,392].forEach((frequency,index)=>{const osc=context.createOscillator(),gain=context.createGain();osc.type='sine';osc.frequency.value=frequency/2;gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(.012-index*.002,now+2);gain.gain.linearRampToValueAtTime(0,now+7);osc.connect(gain).connect(master);osc.start(now);osc.stop(now+7.1)})}
-music.onclick=async()=>{const play=music.getAttribute('aria-pressed')!=='true';if(play){context=context||new(window.AudioContext||window.webkitAudioContext)();master=master||context.createGain();master.gain.value=.65;master.connect(context.destination);await context.resume();chord();timer=setInterval(chord,6500)}else{clearInterval(timer);if(context)await context.suspend()}music.setAttribute('aria-pressed',String(play));music.setAttribute('aria-label',(play?'Pause':'Play')+' background music')};
+const music = document.getElementById("music");
+const bgMusic = document.getElementById("bgMusic");
+
+bgMusic.volume = 0.25;
+
+music.onclick = () => {
+
+    const playing = music.getAttribute("aria-pressed") === "true";
+
+    if (playing) {
+        bgMusic.pause();
+    } else {
+        bgMusic.play();
+    }
+
+    music.setAttribute("aria-pressed", !playing);
+    music.querySelector("span").textContent = playing ? "Music" : "Pause";
+};
