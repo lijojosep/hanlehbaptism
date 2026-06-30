@@ -14,23 +14,31 @@ const form=document.getElementById('blessingForm'),wall=document.getElementById(
 const music = document.getElementById("music");
 const bgMusic = document.getElementById("bgMusic");
 
-if(bgMusic){
+console.log("Music button:", music);
+console.log("Audio element:", bgMusic);
+
+if (!music) {
+    console.error("Music button not found");
+}
+
+if (!bgMusic) {
+    console.error("Audio element not found");
+} else {
 
     bgMusic.volume = 0.25;
 
-    music.onclick = () => {
+    music.onclick = async () => {
 
-        const playing = music.getAttribute("aria-pressed")==="true";
+        const playing = music.getAttribute("aria-pressed") === "true";
 
-        if(playing){
+        if (playing) {
             bgMusic.pause();
-        }else{
-            bgMusic.play();
+        } else {
+            await bgMusic.play();
         }
 
-        music.setAttribute("aria-pressed", !playing);
-        music.querySelector("span").textContent = playing ? "Music" : "Pause";
-
+        music.setAttribute("aria-pressed", String(!playing));
+        music.querySelector("span").textContent =
+            playing ? "Music" : "Pause";
     };
-
 }
