@@ -14,18 +14,18 @@ const form=document.getElementById('blessingForm'),wall=document.getElementById(
 const music = document.getElementById("music");
 const bgMusic = document.getElementById("bgMusic");
 
-bgMusic.volume = 0.25;
+bgMusic.volume = 0.3;
 
-music.onclick = () => {
+music.addEventListener("click", async () => {
 
-    const playing = music.getAttribute("aria-pressed") === "true";
+    console.log("Button clicked");
 
-    if (playing) {
-        bgMusic.pause();
-    } else {
-        bgMusic.play();
+    try{
+        await bgMusic.play();
+        console.log("Playing");
+    }catch(err){
+        console.error(err);
     }
 
-    music.setAttribute("aria-pressed", !playing);
-    music.querySelector("span").textContent = playing ? "Music" : "Pause";
-};
+});
+
